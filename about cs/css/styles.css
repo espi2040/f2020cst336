@@ -7,6 +7,9 @@ header, main, nav, footer{
 }
 
 
+
+
+
 nav a { /* links within "nav" container */
     padding:15px;
     padding-bottom: 4px;
@@ -53,11 +56,8 @@ mark {
   background-color: yellow;
   color: black;
 }
- b{
+a{
     color: hotpink;
-}
-b:visited{
-    color:blue;
 }
 
 
@@ -99,4 +99,6 @@ h1{
     font-family: 'Share Tech Mono', monospace;
     font-size: 4em;
     margin-bottom: 0px;
+    border-bottom-style: solid;
+
 }
