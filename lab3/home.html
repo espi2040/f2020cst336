@@ -126,6 +126,12 @@
              }else{
                  $("#totalScore").html("Total Score: " + score);
              }
+             if(score>=100){
+                 let con ="Congratulations you score 100 or more";
+                 con = con.fontcolor("purple");
+                 
+                 $("#congratulations").html(con);
+             }
         
             
              $("#totalAttempts").html("Total Attempts :"+ (++attempts));
@@ -140,6 +146,8 @@
 <body class="text-center">
     
     <h1 class="jumbotron">US Geography Quiz</h1>
+    <br><br>
+    <h3 id="congratulations" ></h3>
     
     <h3><span id = "markImg1"></span> What is the capital of California?</h3>
     <input type="text" id="q1">
@@ -186,6 +194,7 @@
    <button class="btn btn-outline-success">Submit Quiz</button>
     <h2 id = "totalScore" class = "text-info"></h2>
     <h3 id ="totalAttempts"></h3>
+  
     
  
 
