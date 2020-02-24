@@ -1,0 +1,32 @@
+  
+#cart{
+    background-color:#fffdd0;
+    text-align-last: center;
+}
+
+button:hover{
+    width: 300px;
+}
+
+
+img{
+    box-shadow: 5px 10px #DCDCDC;
+}
+h1:hover{
+
+    transition: color 1s ease;
+    color: green;
+    background-color:#fffdd0;
+
+}
+
+h3{
+    letter-spacing: 2px;
+}
+#p1{
+    color: blue;
+}
+item1,item2{
+    padding-bottom: 50px;
+}
+
