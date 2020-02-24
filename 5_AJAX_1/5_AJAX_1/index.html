@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>CSUMB</title>
+	<link rel="stylesheet" type="text/css" href="app.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script>
+     $(document).ready(function(){
+        $("button").on("click",truefalse);
+         displayQ4Choices();
+      
+         
+         function displayQ4Choices(){
+             let q4ChoicesArray = ["true","false"];
+            
+             
+             for(let i = 0; i< q4ChoicesArray.length;i++){
+               $("#q4Choices").append(` <input type="radio" name="q4"
+               id="${q4ChoicesArray[i]}" value="${q4ChoicesArray[i]}"> <label 
+               for="${q4ChoicesArray[i]}"> ${q4ChoicesArray[i]}</label>`);
+
+             }
+         } function truefalse(){
+             //Question4
+             if(q4Response== "true"){
+                 rightAnswer(4);
+             }
+             if(q4Response== "false"){
+                 rightAnswer(4);
+             }
+        
+         }
+            
+        })//ready
+           </script>
+</head>
+<body>
+	<div class="container">
+		<div class="jumbotron">
+			<h1>Todo List</h1>
+		</div>
+		<div class="row">
+		
+			<div class="col-sm-4">
+				<div id="details-text"></div>
+				
+				    <h3> completed</h3>
+				    <div id = "q4Choices"></div>
+				    <div id="q4Feedback" > </div>
+				    <button id="scd-details-btn"  class="btn btn-outline-success"> Query Tools </button>
+				    
+		</div>	
+	</div>
+	<script type="text/javascript" src="app.js"></script>
+</body>
+</html>
