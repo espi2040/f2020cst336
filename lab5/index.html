@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset ="utf-8">
+    <title>Pixabay Image Search</title>
+    <link  href="css/styles.css"rel="stylesheet" type="text/css" />
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script> 
+ <script>
+    $(document).ready(function(){
+      // call the searchfunction when button is clicked. 
+      $("#searchButton").on("click", function(){ 
+        search()})
+        
+        // random words for start up
+        var words = ["house","car","dog","cat","ball","soda","ram",'cute'];
+        var ran= Math.floor(Math.random() * 7)
+        
+        $("#keyword").val(words[ran]);
+        search();
+   function search(){
+      $.ajax({
+
+      method: "GET",
+      url: "https://pixabay.com/api/",
+      dataType: "json",
+      data: { "key":"15449479-cb1368bcdd791eac5ff012690", "q" : $("#keyword").val() , "orientation": $("#orientation").val()},
+      success: function(result,status) {
+        
+        result.hits = _.shuffle(result.hits);
+        
+        let view= $("#orientation").val();
+        
+        if(view=="vertical"){
+               
+                          $("#image1").html(` Likes: ${result.hits[0].likes} <br><img src= ' ${result.hits[0].webformatURL}
+          ' width ='110' height = '200' class = "pic">`);
+          $("#image2").html(` Likes: ${result.hits[1].likes} <br><img src= ' ${result.hits[1].webformatURL}
+          ' width ='110' height = '200' class = "pic">`);
+          $("#image3").html(` Likes: ${result.hits[2].likes} <br><img src= ' ${result.hits[2].webformatURL}
+          ' width ='110' height = '200' class = "pic">`);
+          $("#image4").html(` Likes: ${result.hits[3].likes} <br><img src= ' ${result.hits[3].webformatURL}
+          ' width ='110' height = '200' class = "pic">`);
+          
+           }else{
+               $("#image1").html(` Likes: ${result.hits[0].likes} <br><img src= ' ${result.hits[0].webformatURL}
+               ' width ='200' height = '110' class = "pic">`);
+               $("#image2").html(` Likes: ${result.hits[1].likes} <br><img src= ' ${result.hits[1].webformatURL}
+               'width ='200' height = '110' class = "pic">`);
+               $("#image3").html(` Likes: ${result.hits[2].likes} <br><img src= ' ${result.hits[2].webformatURL}
+               ' width ='200' height = '110' class = "pic">`);
+               $("#image4").html(` Likes: ${result.hits[3].likes} <br><img src= ' ${result.hits[3].webformatURL}
+               ' width ='200' height = '110' class = "pic">`);
+           }
+        
+          
+           
+          } 
+        
+  });//ajax           
+} // search()            
+      
+});  // document.ready
+  </script>
+    
+  
+
+</head>
+<body class="text-center">
+    
+    
+    <nav>
+        <h1>Pixabay Image Search</h1>
+        <label>Keyword:</label><input type="text" id="keyword">
+        
+        <div><label>Orientation:</label>
+        <select id="orientation", name="orientation">
+        <option value="horizontal">Horizontal</option>
+        <option value="vertical">Vertical</option>
+        </select>
+        <button id="searchButton">Search</button>
+        </div>
+        
+    </nav>
+    <div id = "frame">
+        
+       
+        
+        
+    </div>
+<div class="row">
+  <div class="column">
+   <div id="image1" class="frame"></div>
+  </div>
+  <div class="column">
+     <div id="image2" class="frame"></div>
+  </div>
+  <div class="column">
+   <div id="image3" class="frame"></div>
+  </div>
+  <div class="column">
+      <div id="image4" class="frame"></div>
+  </div>
+</div>
+    
+    
+ 
+
+</body>
+
+</html>
