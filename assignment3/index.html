@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<link href="https://fonts.googleapis.com/css?family=Knewave&display=swap" rel="stylesheet">
+
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>HW 3: Baby Names </title>
+       <style>
+            @import url("css/styles.css");
+        </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js" ></script>
+  
+ 
+  <header>
+    <h1> Behind The Name</h1>
+    </header>
+
+</head>
+
+
+
+       
+<body  background="img/who.jpg" alt="clouds">
+   
+   <div class="container" >
+		<div class="jumbotron"id="input">
+			
+			<p>Please enter a name</p>
+			<form action="/" method="post" onsubmit="search(); return false;"  >
+				<div class="form-group row">
+					<label for="name" class="col-sm-2 col-form-label">name</label>
+					<div class="col-sm">
+						<input type="text" class="form-control" id="name" placeholder="Rodrigo " required>
+					</div>
+					<div class="col-sm-2">
+						<button type="submit" class="btn btn-primary">submit</button>
+					</div>
+				</div>
+			</form>
+		</div>	
+		
+		
+		<div class="flex-container" id="names">
+			<div class="form-group row">
+				<div class="col-sm-6" id="used">
+					</div>
+					<div class="col-sm-2" id ="gender">
+	
+					</div>
+				</div>
+
+			
+			
+		</div>
+		
+	</div>
+	
+	<script type="text/javascript" src="app.js"></script>
+      
+ 
+</body>
+</html>

@@ -1,0 +1,44 @@
+body{
+    
+    display :center;
+    font-size: 30px;
+    color: black;
+    text-align: center;
+    font-family: 'Knewave', cursive;
+    text-shadow: 3px 3px white;
+    
+ 
+
+ }
+header {
+  background-color: black;
+  text-align: center;
+  color: red;
+  border-style: groove;
+  border-width: 0px;
+  border-radius: 15px
+
+
+}
+
+#input{
+  background-color: #0c3578;
+  text-align: center;
+  border-style: groove;
+  border-width: 13px;
+  border-color: red;
+  border-radius: 40px;
+  color: red;
+
+}
+#names{
+  
+  text-align: center;
+  border-style: groove;
+  border-width: 13px;
+  border-color: red;
+  border-radius: 40px;
+
+}
+
+

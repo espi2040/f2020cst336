@@ -2,29 +2,40 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="css/styles.css">
+        
         <title>Assignment 3</title>
-      
-
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
     <body>
-        <h1>Random Dog Gallery</h1>
-        <h2>Please enter the number of random images you'd like to generate</h2>
+        <h1>Behind The Name</h1>
+        <h2>Please Enter A Name </h2>
+        <form action="/" method="post" onsubmit"search(); return false;">
+            
+            	<div class="form-group row">
+					<label for="number-images" class="col-sm-2 col-form-label">name</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="placeholder" placeholder="0" required>
+					</div>
+					<div class="col-sm-6">
+					     <br>
+         
+				   <button id = searchBtn type="submit" class="btn btn-primary">Query</button>
+					</div>
+				</div>
+        </form> 
         
-        Number of images <input type="text" id="amount">
-        <button id="searchButton">Search</button>
-        
-
-        <div class="image-content">
-      
+        <div  id="nameInfo" +name>
+            
+            
         </div>
+
+    <script type="text/javascript" src="app.js"></script>
      
-    </body>  
-     
-    <footer>
-      <message id="message"></message>
-    </footer>
-      <script src="js/script.js"></script>
+    </body>
+    
+    
     
     
 </html>
