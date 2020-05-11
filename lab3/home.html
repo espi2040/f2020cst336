@@ -1,203 +1,169 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-    <meta charset ="utf-8">
-    <title>US Quiz</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
-    rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-    crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
-    </script>
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js" >
-    </script> 
-  
+  <meta charset="utf-8">
+  <title>US Quiz (Express)</title> 
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
   <script>
-     $(document).ready(function(){
+    // LAB 8 creating the quiz in the server 
+    $(document).ready(function(){
+      //Event Listeners
+       //Question5 images
+      $(".q5choice").on("click", function(){
         
-         //global Variables
-         var score = 0;
-         var attempts = localStorage.getItem("totalAttempts");
-         //event listeners
-         $("button").on("click",gradeQuize);
-         displayQ4Choices();
-         
-         //question 5
-         $(".q5Choice").on("click",function(){
-             $(".q5Choice").css("background","");
-             $(this).css("background","rgb(255,255,0)");
-         });
-         
-         function displayQ4Choices(){
-             let q4ChoicesArray = ["Maine", "Rhode Island", "Maryland", "Delaware"];
-             q4ChoicesArray= _.shuffle(q4ChoicesArray)
-             
-             for(let i = 0; i< q4ChoicesArray.length;i++){
-               $("#q4Choices").append(` <input type="radio" name="q4"
-               id="${q4ChoicesArray[i]}" value="${q4ChoicesArray[i]}"> <label 
-               for="${q4ChoicesArray[i]}"> ${q4ChoicesArray[i]}</label>`);
-
-             }
-         }
-         
-         // function
-         function isFormValid(){
-             let isValid = true;
-             if ($("#q1").val()==""){
-                 isValid= false;
-                 $("#validationFdbk").html("Question 1 was not answered");
-             }
-             
-             return isValid;
-         }
-         function rightAnswer(index){
-             $(`#q${index}Feedback`).html("Correct!");
-             $(`#q${index}Feedback`).attr("class","bg-success text-white");
-             $(`#markImg${index}`).html("<img src='img/checkmark.png' alt='checkmark'>");
-             score+= 20;
-             
-         } 
-         function wrongAswer(index){
-             $(`#q${index}Feedback`).html("Incorrect!");
-             $(`#q${index}Feedback`).attr("class","bg-warning text-white");
-             $(`#markImg${index}`).html("<img src='img/xmark.png' alt='xmark'>");
-             }
-         
-         function gradeQuize(){
-            
-
-            
-             $("#validationFdbk").html("");// resets validation feedback
-             if(!isFormValid()){
-                 return;
-             }
-              
-             //veriables
-             score = 0;
-             let q1Response = $("#q1").val().toLowerCase();
-             let q2Response = $("#q2").val();
-             let q4Response = $("input[name=q4]:checked").val();
+      $(".q5choice").css("background-color",""); //resets background color
+      $(this).css("background-color","rgb(255, 255, 0)"); 
+       
+       
+      })
+      
+      
+      $("#submitBtn").on("click", function(){
+        $.ajax({
+  
+              method: "GET",
+              url: "/gradeQuiz",
+              dataType: "json",
+              data: { "q1": $("#q1").val() ,
+                       "q2":$("#q2").val(), 
+                       "q3":$("#q3").val(),
+                       "q4":$("#q4").val(),
+                       "q5":$("#q5").val(),
+                       "q6":$("#q6").val(),
+                       "q7":$("#q7").val(),
+                       "q8":$("#q8").val(),
+                      
+                    
+                     
+                    },
+              success: function(result,status) { // information is stored here
+              //  alert(result.score);// accessing info. access by properties example; Total score
+           $("#totalScore").html("totalScore:" + result.score); // accessing place holder using jQuery and diplay 
+           $("#q1Feedback").html(result.feedback1);  // accessing place holder using jQuery and diplay.
+           $("#q2Feedback").html(result.feedback2); // values have to match name your are getting in api example ; result. -->feedback1<---
+           $("#q3Feedback").html(result.feedback3);
+           $("#q4Feedback").html(result.feedback4); 
+           $("#q5Feedback").html(result.feedback5);
+           $("#q6Feedback").html(result.feedback6);
+           $("#q7Feedback").html(result.feedback7);
+           $("#q8Feedback").html(result.feedback8);
+           
+             if (result.score > 80) {
+             $("#totalScore").css("background-color", "green");
+             $("#totalScore").html(`Congratulations! Total Score:${result.score}`);
+      
+        }else{
+          $("#totalScore").css("background-color", "red");
+          $("#totalScore").html(`Total Score:${result.score}`);
+           
+        }
+          }
+          
         
-             
-             //Question 1
-             if(q1Response=="sacramento"){
-                 rightAnswer(1);
-             }else{
-                 wrongAswer(1);
-             }
-             
-             //Question 2
-             if(q2Response=="mo"){
-                 rightAnswer(2);
-             }else{
-                 wrongAswer(2);
-             }
-              //Question 3
-             if($("#Jefferson").is(":checked") && $("#Roosevelt").is(":checked") 
-             && !$("#Jackson").is(":checked") && !$("#Franklin").is(":checked")){
-                 rightAnswer(3);
-             }else{
-                 wrongAswer(3);
-             }
-             
-             //Question4
-             if(q4Response== "Rhode Island"){
-                 rightAnswer(4);
-             }else{
-                 wrongAswer(4);
-             }
-             
-             //Question 5
-             if ($("#seal2").css("background-color") == "rgb(255, 255, 0)"){
-                 rightAnswer(5);
-             }
-             else{
-                 wrongAswer(5);
-             }
-             
-             
-             
-             
-             if(score<80){
-                 var str = "Total Score: " + score;
-                 var str = str.fontcolor("red");
-                
-    
-                  $("#totalScore").html(str);
-             }else{
-                 $("#totalScore").html("Total Score: " + score);
-             }
-             if(score>=100){
-                 let con ="Congratulations you score 100 or more";
-                 con = con.fontcolor("purple");
-                 
-                 $("#congratulations").html(con);
-             }
-        
-            
-             $("#totalAttempts").html("Total Attempts :"+ (++attempts));
-             localStorage.setItem("totalAttempts",attempts);
-            
-             
-         }
-        })//ready
-    </script>
+        });//ajax
+      });//submitBtn
+      
+      
+    })//ready
+  </script>
 
 </head>
 <body class="text-center">
-    
-    <h1 class="jumbotron">US Geography Quiz</h1>
-    <br><br>
-    <h3 id="congratulations" ></h3>
-    
-    <h3><span id = "markImg1"></span> What is the capital of California?</h3>
-    <input type="text" id="q1">
-    <br><br>
-    <div id = "q1Feedback" ></div>
-    <br>
-    
-    <h3><span  id="markImg2"></span> What is the longest river?</h3>
-    <select id="q2">
-        <option value ="">Select One</option>
-        <option value="ms">Mississippi</option>
-        <option value ="mo">Missouri</option>
-        <option value = "co">Colorado</option>
-        <option value = "de">Delaware</option>
-    </select>
-     <br><br>
-     <div id="q2Feedback" > </div>
-     <br>
-       
-     <h3> <span id = markImg3></span> What presidents are carved into mount Rushmore?</h3>
-     <input type="checkbox" id="Jackson"/> <label for="Jackson"> A.Jackson  </label>
-     <input type="checkbox" id="Franklin"/><label for="Franklin">B. Franklin</label>
-     <input type="checkbox" id="Jefferson"/><label for="Jefferson">T. Jefferson</label>
-     <input type="checkbox" id="Roosevelt"/><label for="Roosevelt">T.  Roosevelt</label>
-     <br><br>
-     <div id = "q3Feedback"></div>
-     <br>
-    
-    <h3><span id = " markImg4"></span>  What is the smallest Us State?</h3>
-    <div id = "q4Choices"></div>
-    <div id="q4Feedback" > </div>
-    <br>
-    
-    <h3><span id = "markImg5"></span> waht image is in the Great Seal of the State of California?</h3>
-    <img src="img/seal1.png" alt = "Seal 1" class="q5Choice" id="seal1"></img>
-    <img src=" img/seal2.png" alt = "Seal 2" class="q5Choice" id="seal2"></img>
-    <img src=" img/seal3.png" alt = "Seal 3" class="q5Choice" id="seal3"></img>
-    <div  id = "q5Feedback"></div>
-    <br><br>
-    
-    
-    
-    <h3 id="validationFdbk" class="bg-danger text-white"></h3>
-   <button class="btn btn-outline-success">Submit Quiz</button>
-    <h2 id = "totalScore" class = "text-info"></h2>
-    <h3 id ="totalAttempts"></h3>
-  
-    
+
+  <h1 class="jumbotron"> US Geography Quiz <br> Express Version </h1>
  
+   <!-- <form> option 2 for this lab we are using Ajax-->  
+  
+  <h3><span id="markImg1"></span> What is the capital of California?</h3>
+  <input type="text" id="q1" name="q1" value="">  <!--q1 id and alll others need to match in html -->   
+  <div id="q1Feedback"></div> 
+  <br>
 
+  <h3><span id="markImg2"></span>What is the longest river?</h3>
+    <select id="q2" name="q2">
+        <option value="">Select One</option>
+        <option value="ms">Mississippi</option>
+        <option value="mo">Missouri</option>
+        <option value="co">Colorado</option>
+        <option value="de">Delaware</option>
+    </select>
+    <br><br>
+  <div id="q2Feedback"></div>
+  <br>
+
+    <h3><span id="markImg3"></span>What presidents are carved into mount Rushmore?</h3>
+    <input type="checkbox" name="q3a" id="Jackson">   <label for="Jackson"> A. Jackson    </label> 
+    <input type="checkbox" name="q3b" id="Franklin">  <label for="Franklin">B. Franklin  </label>
+    <input type="checkbox" name="q3c" id="Jefferson"> <label for="Jefferson">T. Jefferson</label>
+    <input type="checkbox" name="q3d" id="Roosevelt"> <label for="Roosevelt">T. Roosevelt</label>
+    <br><br>
+    <div id="q3Feedback"></div>
+    <br>
+
+	
+  
+  <h3><span id="markImg4"></span>What is the smallest US State?</h3>
+  <div id="q4Choices">
+  <input type="radio" name="q4" id="Maryland" value="Maryland">
+  <label for ="Maryland">Maryland</label>
+  <input type="radio" name="q4" id="Main" value="Main">
+  <label for ="Maine">Maine</label>
+  <input type="radio" name="q4" id="Delaware" value="Delaware">
+  <label for ="Delaware">Delaware</label>
+  <input type="radio" name ="q4" id="Rhode Island" value="Rhode Island">
+  <label for ="Rhode Island">Rhode Island</label>
+  </div>
+
+  <div id="q4Feedback"></div>
+  <br><br>
+    
+    <h3><span id="markImg5"></span>Which is the correct seal of California?</h3>
+    <img src="/img/seal1.png" alt= "seal1" class="q5choice" id="seal1">
+    <img src="/img/seal2.png" alt= "seal2" class="q5choice" id="seal2">
+    <img src="/img/seal3.png" alt= "seal3" class="q5choice" id="seal3">
+	
+	<br><br>
+    <div id="q5Feedback"></div>
+    <br>
+  
+   <h3><span id="markImg1"></span> How many states in the United States </h3>
+  <input type="text" id="q6" name="q6" value="">  <!--q6 id and alll others need to match in html -->   
+  <div id="q6Feedback"></div> 
+  <br>
+  
+
+  <h3><span id ="markIm2"></span>Which mountain summit is the largest in the USA?</h3>
+  <select id="q7">
+     <option value= "">Select One</option>
+     <option value= "d">Denali</option>
+     <option value= "mw">Mount Whitney</option>
+     <option value= "mr">Mount Rainer</option>
+     <option value= "mnw">Mount Washington</option>
+  </select>
+  <br><br>
+  <div id="q7Feedback"></div>
+ <br>
+ 
+ 
+      <h3><span id ="markImg6"></span>Which is the largest populous state in the U.S.</h3>
+  
+  <input type="checkbox" id="q8a" > <label for="Newyork">Newyork</label>
+  <input type="checkbox" id="q8b"> <label for="Texas">Texas</label>
+  <input type="checkbox" id="q8c"> <label for="California">Californa</label>
+  <input type="checkbox" id="q8d"> <label for="Flordia">Flordia</label>
+  <br><br>
+  <div id="q8Feedback"></div>
+  <br>
+  
+  
+   <button id="submitBtn" class="btn btn-outline-success"> Submit Quiz </button>
+    <br><br>
+
+  <h2 id="totalScore" class="text-info">Total Score:  </h2> <!--  place holder for Total score --> 
+  <div id="messagefeedback"></div>
+  <!-- <form> option 2 for this lab we are using Ajax--> 
+   
 </body>
-
 </html>
